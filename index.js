@@ -37,8 +37,8 @@ const versus = new Jimp('assets/images/versus.png', function (err, img) {
 });
 
 app.get('/api/image/merge', (req, res) => {
-    const image1 = list_images[0];
-    const image2 = list_images[1];
+    const image1 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
+    const image2 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
     mergeImg([image1, image2], { align: 'center' }).then((img) => {
         // img.composite(versus, img.bitmap.width / 2, img.bitmap.height / 2);
         img.getBuffer(Jimp.MIME_PNG, (error, data) => {
