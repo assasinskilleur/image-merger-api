@@ -3,9 +3,12 @@ const bodyParser = require('body-parser')
 const mergeImg = require('merge-img');
 const Jimp = require('jimp');
 const fs = require('fs');
+const cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 8080
+
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
@@ -45,6 +48,7 @@ app.get('/api/image/merge', (req, res) => {
                     const i = Buffer.from(dataD, 'base64');
                     res.writeHead(200, {
                         'Content-Type': 'image/png',
+                        'Access-Control-Allow-Origin': "*",
                         'Content-Length': i.length
                     });
                     res.end(i);
