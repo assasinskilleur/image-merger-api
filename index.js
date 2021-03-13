@@ -45,12 +45,7 @@ app.get('/api/image/merge', (req, res) => {
                 jimpImage.composite(versus, (jimpImage.bitmap.width / 2) - (versus.bitmap.width / 2), (jimpImage.bitmap.height / 2) - (versus.bitmap.height / 2));
                 jimpImage.getBuffer(Jimp.MIME_PNG, (error, dataD) => {
                     const i = Buffer.from(dataD, 'base64');
-                    res.writeHead(200, {
-                        'Content-Type': 'image/png',
-                        'Access-Control-Allow-Origin': "*",
-                        'Content-Length': i.length
-                    });
-                    res.end(i);
+                    res.json(i);
                 });
             })
         })
