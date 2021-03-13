@@ -39,29 +39,22 @@ const versus = new Jimp('assets/images/versus.png', function (err, img) {
 app.get('/api/image/merge', (req, res) => {
     const image1 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
     const image2 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
-
-    Jimp.read(image1).then((img1) => {
-        Jimp.read(image2).then((img2) => {
-            img1.resize(512, 512);
-            img2.resize(512, 512);
-            mergeImg([img1, img2], { align: 'center' }).then((img) => {
-                img.getBuffer(Jimp.MIME_PNG, (error, data) => {
-                    Jimp.read(data).then((jimpImage) => {
-                        jimpImage.composite(versus, (jimpImage.bitmap.width / 2) - (versus.bitmap.width / 2), (jimpImage.bitmap.height / 2) - (versus.bitmap.height / 2));
-                        jimpImage.getBuffer(Jimp.MIME_PNG, (error, dataD) => {
-                            const i = Buffer.from(dataD, 'base64');
-                            res.writeHead(200, {
-                                'Content-Type': 'image/png',
-                                'Access-Control-Allow-Origin': "*",
-                                'Content-Length': i.length
-                            });
-                            res.end(i);
-                        });
-                    })
-                })
-            });
+    mergeImg([image1, image2], {align: 'center'}).then((img) => {
+        img.getBuffer(Jimp.MIME_PNG, (error, data) => {
+            Jimp.read(data).then((jimpImage) => {
+                jimpImage.composite(versus, (jimpImage.bitmap.width / 2) - (versus.bitmap.width / 2), (jimpImage.bitmap.height / 2) - (versus.bitmap.height / 2));
+                jimpImage.getBuffer(Jimp.MIME_PNG, (error, dataD) => {
+                    const i = Buffer.from(dataD, 'base64');
+                    res.writeHead(200, {
+                        'Content-Type': 'image/png',
+                        'Access-Control-Allow-Origin': "*",
+                        'Content-Length': i.length
+                    });
+                    res.end(i);
+                });
+            })
         })
-    })
+    });
 })
 
 app.listen(port, () => {
