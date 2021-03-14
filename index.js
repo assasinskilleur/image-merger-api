@@ -65,12 +65,8 @@ app.get('/api/image/rank/:text', (req, res) => {
             emptyimg.print(font, 0, 0, rank);
             emptyimg.rotate(20);
             img.composite(emptyimg, (img.bitmap.width / 2) - (emptyimg.bitmap.width / 2.5), (img.bitmap.height / 2) - (emptyimg.bitmap.height / 3));
-            img.getBuffer(Jimp.MIME_PNG, (err, image) => {
-                res.writeHead(200, {
-                    'Content-Type': 'image/png',
-                    'Content-Length': image.length
-                });
-                res.end(image);
+            img.getBase64(Jimp.MIME_PNG, (error, dataD) => {
+                res.json(dataD);
             });
         });
     });
