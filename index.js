@@ -22,19 +22,25 @@ app.get('/', (req, res) => {
 
 list_images = [];
 
+const image_folder = './assets/images/merging/';
+
 function getAllImages() {
-    const folder = './assets/images/merging/';
-    fs.readdirSync(folder).forEach(file => {
-        list_images.push(folder + file);
+    fs.readdirSync(image_folder).forEach(file => {
+        list_images.push(image_folder + file);
     })
 }
 
 getAllImages();
 
-const versus = new Jimp('assets/images/versus.png', function (err, img) {
-    err ? console.log('logo err' + err) : console.log('logo created and ready for use');
+const versus = new Jimp('assets/images/versus.png', (err, img) => {
+    err ? console.log('versus err' + err) : console.log('versus image created and ready for use');
     return img.opacity(1).scale(0.5);
 });
+
+const user_image = new Jimp('assets/images/user_image.png', (err, img) => {
+    err ? console.log('userImage err' + err) : console.log('user image created and ready for use')
+    return img.opacity(1);
+})
 
 app.get('/api/image/merge', (req, res) => {
     const image1 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
@@ -49,7 +55,30 @@ app.get('/api/image/merge', (req, res) => {
             })
         })
     });
-})
+});
+
+app.get('/api/image/rank/:text', (req, res) => {
+    const img = user_image.clone();
+    const rank = req.params.text.toUpperCase();
+    new Jimp(rank.length * 180, 256, (err, emptyimg) => {
+        Jimp.loadFont('./assets/font/rank.fnt').then((font) => {
+            emptyimg.print(font, 0, 0, rank);
+            emptyimg.rotate(20);
+            img.composite(emptyimg, (img.bitmap.width / 2) - (emptyimg.bitmap.width / 2.5), (img.bitmap.height / 2) - (emptyimg.bitmap.height / 3));
+            img.getBuffer(Jimp.MIME_PNG, (err, image) => {
+                res.writeHead(200, {
+                    'Content-Type': 'image/png',
+                    'Content-Length': image.length
+                });
+                res.end(image);
+            });
+        });
+    });
+});
+
+app.post('/api/image/save', (req, res) => {
+
+});
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
