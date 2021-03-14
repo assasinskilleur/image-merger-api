@@ -4,6 +4,8 @@ const mergeImg = require('merge-img');
 const Jimp = require('jimp');
 const fs = require('fs');
 const cors = require('cors')
+const path = require('path');
+const uuid = require('uuid');
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -17,7 +19,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.sendFile(path.join(__dirname + '/hello.html'));
 })
 
 list_images = [];
@@ -73,7 +75,14 @@ app.get('/api/image/rank/:text', (req, res) => {
 });
 
 app.post('/api/image/save', (req, res) => {
-
+    const image = req.body.image;
+    Jimp.read(image).then(( image) => {
+        image.resize(Jimp.AUTO, 512);
+        const imageName = image_folder + uuid.v4() + "." + image.getExtension();
+        image.write(imageName);
+        list_images.push(imageName);
+        res.json({ error: 0, message: "Image sauvegardé" });
+    });
 });
 
 app.listen(port, () => {
