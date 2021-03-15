@@ -48,14 +48,16 @@ app.get('/api/image/merge', (req, res) => {
     const image1 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
     const image2 = list_images[Math.floor(Math.random() * Math.floor(list_images.length))];
     mergeImg([image1, image2], {align: 'center'}).then((img) => {
-        img.getBuffer(Jimp.MIME_PNG, (error, data) => {
-            Jimp.read(data).then((jimpImage) => {
-                jimpImage.composite(versus, (jimpImage.bitmap.width / 2) - (versus.bitmap.width / 2), (jimpImage.bitmap.height / 2) - (versus.bitmap.height / 2));
-                jimpImage.getBase64(Jimp.MIME_PNG, (error, dataD) => {
-                    res.json(dataD);
-                });
+        Jimp.read(image1).then((res) => {
+            img.getBuffer(Jimp.MIME_PNG, (error, data) => {
+                Jimp.read(data).then((jimpImage) => {
+                    jimpImage.composite(versus, res.bitmap.width - (versus.bitmap.width / 2), (jimpImage.bitmap.height / 2) - (versus.bitmap.height / 2));
+                    jimpImage.getBase64(Jimp.MIME_PNG, (error, dataD) => {
+                        res.json(dataD);
+                    });
+                })
             })
-        })
+        });
     });
 });
 

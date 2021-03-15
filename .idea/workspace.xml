@@ -25,11 +25,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d1bc7436-e0a2-4f71-a570-f0941bc90ee4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/hello.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +73,7 @@
       <workItem from="1615641336589" duration="6622000" />
       <workItem from="1615724978601" duration="2566000" />
       <workItem from="1615751732116" duration="5936000" />
+      <workItem from="1615826242703" duration="71000" />
     </task>
     <servers />
   </component>
@@ -92,6 +90,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="854" y="490" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1615759918261">
