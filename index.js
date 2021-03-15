@@ -10,7 +10,7 @@ const uuid = require('uuid');
 const app = express()
 const port = process.env.PORT || 8080
 
-app.use(cors())
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
